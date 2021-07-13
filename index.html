@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MY PORTFOLIO(assignment)</title>
+    <style>
+        .my_text {
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body style="background-color:#8ee4af;">
+
+    <p style="text-align:center;">
+        <img id="pfp" style="width:350px;height:350px;"><br></p>
+
+    <div class="my_text">
+        <h1 id="myName"></h1><br>
+        <p id="myBio"></p><br>
+        <h4 id="myFollowers"></h4><br>
+        <p>You can find me here on <a id="myGithubLink">Github</a> </p> <br>
+    </div>
+    <div style="text-align:center;" class="my_text">
+        <p> <u>Here are my Github repos:</u></p>
+        <h4 id="repo"></h4>
+    </div>
+    <script>
+        fetch("https://api.github.com/users/5hrabin")
+            .then(response => response.json())
+            .then(function (data) {
+                console.log(data)
+                document.getElementById("pfp").src = data["avatar_url"]
+                document.getElementById("myName").textContent = data["name"]
+                document.getElementById("myBio").textContent = data["bio"]
+                document.getElementById("myGithubLink").href = data["html_url"]
+            })
+
+        fetch("https://api.github.com/users/5hrabin/repos")
+            .then(response => response.json())
+            .then(function (data) {
+
+                let m = data.length;
+                var n = parseInt(m);
+                let repoName = "";
+                for (i = 0; i < n; i++) {
+                    repoName += "SN." + (i + 1) + " " + data[i]['name'] + "<br>" + "<br>";
+                }
+                document.getElementById('repo').innerHTML = repoName;
+            })
+    </script>
+</body>
+
+</html>
